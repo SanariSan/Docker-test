@@ -3,11 +3,11 @@ import { Client } from "pg";
 
 const app = express();
 const clientCreds = {
-	user: "postgres",
-	password: "postgres",
-	host: "pg_test",
-	database: "docker_test_db",
-	port: 5432,
+	user: process.env.POSTGRES_USER || "postgres",
+	password: process.env.POSTGRES_PASSWORD || "postgres",
+	host: process.env.POSTGRES_HOST || "localhost",
+	database: process.env.POSTGRES_DB || "docker_test_db",
+	port: <number>+(<string>process.env.POSTGRES_PORT) || 5433,
 };
 
 const asyncHandle = (mw) => (req, res, next) => mw(req, res, next).catch((e) => next(e));

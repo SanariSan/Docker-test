@@ -75,6 +75,7 @@ First run postgres container
 sudo docker run \
     --rm \
 	-d \
+    -p 5433:5432 \
 	--name pg_test \
 	--net pg_express_test_nw \
 	-e POSTGRES_PASSWORD=postgres \
@@ -87,11 +88,12 @@ Where:
 
 1. --rm | is to remove container after it stops or fails
 2. -d | to run in bg (daemon)
-3. --name | to give custom name
-4. --net | specifying the custom network to make containers communicate
-5. -e | ENV variables, in this case with special names postgres container relies on
-6. -v | path to mount volumes to
-7. image
+3. -p | exposing port to connect outside of containers e.g. when testing (yarn start)
+4. --name | to give custom name
+5. --net | specifying the custom network to make containers communicate
+6. -e | ENV variables, in this case with special names postgres container relies on
+7. -v | path to mount volumes to
+8. image
 
 ---
 

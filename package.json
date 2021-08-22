@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "nodemon --exec ts-node ./src/index.ts",
-		"start-prod": "node ./dist/index.js",
+		"start-prod": "POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres POSTGRES_HOST=pg_test POSTGRES_DB=docker_test_db POSTGRES_PORT=5432 node ./dist/index.js",
 		"build": "tsc"
 	},
 	"dependencies": {
