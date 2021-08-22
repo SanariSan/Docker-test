@@ -9,6 +9,7 @@
 ## About <a name = "about"></a>
 
 Testing docker (+compose) abilities here.
+Express app + postgreSQL db.
 
 ## Getting Started <a name = "getting_started"></a>
 
@@ -45,13 +46,16 @@ More info here: https://docs.docker.com/engine/install/ubuntu/
 
 A step by step series of examples that tell you how to get a development env running.
 
-Not much going on here, just go to the next chapter.
+Create docker network
+```
+sudo docker network create pg_express_test_nw
+```
 
 ## Usage <a name = "usage"></a>
 
 To build
 ```
-sudo docker build -t sanarisan/test:1 .
+sudo docker build -t sanarisan/express_test:1 .
 ```
 
 To see image
@@ -61,47 +65,81 @@ sudo docker image ls
 
 To remove image
 ```
-sudo docker image rm sanarisan/test:1
+sudo docker image rm -f sanarisan/express_test:1
 ```
 
-To run container
+---
+
+First run postgres container
 ```
-sudo docker run --rm --name test -p 3000:3000 sanarisan/test:1
+sudo docker run \
+    --rm \
+	-d \
+	--name pg_test \
+	--net pg_express_test_nw \
+	-e POSTGRES_PASSWORD=postgres \
+	-e POSTGRES_USER=postgres \
+	-e POSTGRES_DB=docker_test_db \
+	-v pgdata:/var/lib/postgresql/data \
+	postgres:13
 ```
 Where:
 
-1. --rm is to remove container after it stops or fails
-2. --name to give custom name
-3. -p to link local machine port to internal exposed one
-4. container name
+1. --rm | is to remove container after it stops or fails
+2. -d | to run in bg (daemon)
+3. --name | to give custom name
+4. --net | specifying the custom network to make containers communicate
+5. -e | ENV variables, in this case with special names postgres container relies on
+6. -v | path to mount volumes to
+7. image
 
+---
+
+Then run express app container
+```
+sudo docker run \
+    --rm \
+    -d \
+    --net pg_express_test_nw \
+    --name express_test \
+    -p 3000:3000 \
+    sanarisan/express_test:1
+```
+
+Where:
+
+1. --rm is to remove container after it stops or fails
+2. -d | to run in bg (daemon)
+3. --net | specifying the custom network to make containers communicate
+4. --name to give custom name
+5. -p to link local machine port to internal exposed one
+6. container name
+
+---
 
 If it runs alright - one can see container with 
 ```
 sudo docker container ls
 ```
 
-And if it fails or stops, you can find it this way
-
+Also can find it by running
 ```
 sudo docker ps -a
 ```
 
-So you can rm it manually and try to start again
+To remove it manually
+```
+sudo docker rm express_test
+```
 
+To see logs
 ```
-sudo docker rm test
+sudo docker logs --follow express_test
 ```
-
-To see logs use
-
-```
-sudo docker logs --follow test
-```
-Here you can also figure out what was the fail reason
+Here you can also figure out what was the fail reason, if some happened
 
 
 To start/stop just
 ```
-sudo docker start/stop test
+sudo docker start/stop express_test
 ```
