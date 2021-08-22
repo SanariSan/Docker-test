@@ -5,12 +5,12 @@ const app = express();
 const clientCreds = {
 	user: "postgres",
 	password: "postgres",
-	host: "127.0.0.1", //?
+	host: "pg_test",
 	database: "docker_test_db",
 	port: 5432,
 };
 
-const asyncHandle = (mw) => (req, res, next) => mw().catch((e) => next(e));
+const asyncHandle = (mw) => (req, res, next) => mw(req, res, next).catch((e) => next(e));
 
 app.get("/", (req, res, next) => {
 	console.log("got request");
@@ -51,9 +51,7 @@ app.use((err, req, res: Response, next) => {
 async function init() {
 	const client = new Client(clientCreds);
 	await client.connect();
-	await client.query(
-		"CREATE TABLE IF NOT EXISTS test_table(id INT(11) NOT NULL AUTO_INCREMENT, data VARCHAR(50) NOT NULL, PRIMARY KEY (id))",
-	);
+	await client.query("CREATE TABLE IF NOT EXISTS test_table (data VARCHAR(50) NOT NULL);");
 
 	app.listen(3000, () => {
 		console.log("started");
