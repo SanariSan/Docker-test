@@ -1,23 +1,24 @@
-import express, { Response } from "express";
-import { DB } from "./db";
-import { routerV1 } from "./routers/router";
+import express from "express";
+import { dbInit } from "./helpers/db";
+import { errorsHandler, routesHandler, settings } from "./loaders";
 
-const app = express();
+async function appInit() {
+	const app = express();
 
-app.use(routerV1);
-app.use((err, req, res: Response, next) => {
-	console.log(err);
-	res.sendStatus(500);
-});
-
-async function init() {
-	await DB.query("CREATE TABLE IF NOT EXISTS test_table (data VARCHAR(50) NOT NULL);");
+	settings(app);
+	routesHandler(app);
+	errorsHandler(app);
 
 	app.listen(3000, () => {
 		console.log("started");
 	}).on("error", (e: any) => {
 		console.log(e);
 	});
+}
+
+async function init() {
+	await dbInit();
+	await appInit();
 }
 
 init();

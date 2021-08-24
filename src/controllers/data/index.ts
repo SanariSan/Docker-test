@@ -1,2 +1,2 @@
-export * from "./read";
-export * from "./write";
+export * from "./read.data";
+export * from "./write.data";
