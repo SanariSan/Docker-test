@@ -22,6 +22,8 @@ COPY package.json yarn.lock ./
 RUN yarn install --pure-lockfile --production
 # copy all the other project files
 COPY --from=build_stage /usr/docker_test/dist ./dist
+# copy dotenv to main directory (idk if this is alright)
+COPY .env ./
 # expose port
 EXPOSE 3000
 # run app
