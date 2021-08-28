@@ -1,1 +1,1 @@
-import { InternalError } from "../";
+import { InternalError } from "../internal.error";

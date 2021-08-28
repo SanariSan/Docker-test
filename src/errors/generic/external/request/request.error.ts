@@ -1,4 +1,5 @@
-import { ERROR_TYPE, ExternalError } from "../";
+import { ExternalError } from "../external.error";
+import { ERROR_TYPE } from "../../generic.type";
 
 class RequestError extends ExternalError {
 	constructor(ERROR_MESAGE: string) {
