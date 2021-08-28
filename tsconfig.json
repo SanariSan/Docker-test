@@ -1,11 +1,11 @@
 {
 	"extends": "./tsconfig-base.json",
 	"compilerOptions": {
-    //specific
-		"target": "es5",
+		//specific
+		"target": "es6",
 		"module": "CommonJS",
 		"moduleResolution": "node",
-    //static
+		//static
 		"resolveJsonModule": true,
 		"allowJs": false,
 		"forceConsistentCasingInFileNames": true,
@@ -14,19 +14,7 @@
 		"declaration": false,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-		"pretty": true,
-    //
-    // - optional
-    //
-    // "lib": ["dom", "dom.iterable", "esnext"],
-    // "noEmit": true,
-    // "jsx": "react",
-    // "isolatedModules": true
-    //
-    // - typeorm
-    //
-    // "emitDecoratorMetadata": true,
-    // "experimentalDecorators": true
+		"pretty": true
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules"]
