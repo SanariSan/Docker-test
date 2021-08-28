@@ -1,0 +1,11 @@
+enum ERROR_ORIGIN {
+	EXTERNAL = "EXTERNAL",
+	INTERNAL = "INTERNAL",
+}
+
+enum ERROR_TYPE {
+	REQUEST = "REQUEST",
+	DB = "DB",
+}
+
+export { ERROR_ORIGIN, ERROR_TYPE };
