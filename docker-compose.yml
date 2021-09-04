@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+    db:
+        image: postgres:13
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: docker_test_db
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+    express:
+        image: sanarisan/express_test:1
+        depends_on:
+            - db
+        command: ["./wait-for-it.sh", "db:5432", "--", "yarn", "start-prod"]
+        ports:
+            - "3000:3000"
