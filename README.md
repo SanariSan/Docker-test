@@ -68,7 +68,7 @@ To remove image
 sudo docker image rm -f sanarisan/express_test:1
 ```
 
----
+### Running with docker
 
 First run postgres container
 ```
@@ -117,7 +117,14 @@ Where:
 5. -p to link local machine port to internal exposed one
 6. container name
 
----
+### Running with docker-compose
+
+As simple as
+```
+sudo docker-compose up
+```
+
+### More commands
 
 If it runs alright - one can see container with 
 ```
