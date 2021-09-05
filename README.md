@@ -1,4 +1,4 @@
-# Docker test
+# Docker playground
 
 ## Table of Contents
 
@@ -42,16 +42,14 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 More info here: https://docs.docker.com/engine/install/ubuntu/
 
-### Installing
+## Usage <a name = "usage"></a>
 
-A step by step series of examples that tell you how to get a development env running.
+### Running with just docker
 
 Create docker network
 ```
 sudo docker network create pg_express_test_nw
 ```
-
-## Usage <a name = "usage"></a>
 
 To build
 ```
@@ -68,7 +66,7 @@ To remove image
 sudo docker image rm -f sanarisan/express_test:1
 ```
 
-### Running with docker
+---
 
 First run postgres container
 ```
@@ -121,8 +119,11 @@ Where:
 
 As simple as
 ```
-sudo docker-compose up
+sudo docker-compose up --build
+sudo docker-compose up -f ./docker-compose.yaml --build
 ```
+
+All the configuration in compose file
 
 ### More commands
 
@@ -144,6 +145,7 @@ sudo docker rm express_test
 To see logs
 ```
 sudo docker logs --follow express_test
+sudo docker-compose logs
 ```
 Here you can also figure out what was the fail reason, if some happened
 
