@@ -10,10 +10,13 @@ services:
             - ./pgdata:/var/lib/postgresql/data
         ports:
             - "5433:5432"
+        restart: always
     express:
+        build: .
         image: sanarisan/express_test:1
         depends_on:
             - db
-        command: ["./wait-for-it.sh", "db:5432", "--", "yarn", "start-prod"]
         ports:
             - "3000:3000"
+        command: ["./wait-for-it.sh", "db:5432", "--", "yarn", "start-prod"]
+        restart: always

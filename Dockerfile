@@ -28,7 +28,7 @@ COPY .env ./
 COPY ./wait-for-it.sh ./
 # chmod script
 RUN chmod +x ./wait-for-it.sh
-# expose port, not used because of docker-compose 
-# EXPOSE 3000
-# run app, not used because of docker-compose
-# CMD yarn start-prod
+#! expose port, not used because of docker-compose 
+EXPOSE 3000
+#! run app, not used because of docker-compose
+CMD yarn start-prod
