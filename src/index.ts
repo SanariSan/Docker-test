@@ -1,5 +1,5 @@
 import express from "express";
-import { RequestError } from "./errors";
+import { RequestError } from "./core/errors";
 import { dbInit } from "./helpers/db";
 import { errorsHandler, routesHandler, settings } from "./loaders";
 

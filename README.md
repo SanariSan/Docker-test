@@ -20,25 +20,35 @@ These instructions will get you a copy of the project up and running on your loc
 Install docker on ubuntu or whatever system
 
 ```
-sudo apt-get update
+apt-get update
 
-sudo apt-get install \
+apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
     lsb-release
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+apt-get update
+apt-get install docker-ce docker-ce-cli containerd.io
 ```
+
+Add user to group `docker` to use commands without sudo
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker 
+```
+
+Restart pc after this!
 
 More info here: https://docs.docker.com/engine/install/ubuntu/
 
@@ -48,29 +58,29 @@ More info here: https://docs.docker.com/engine/install/ubuntu/
 
 Create docker network
 ```
-sudo docker network create pg_express_test_nw
+docker network create pg_express_test_nw
 ```
 
 To build
 ```
-sudo docker build -t sanarisan/express_test:1 .
+docker build -t sanarisan/express_test:1 .
 ```
 
 To see image
 ```
-sudo docker image ls
+docker image ls
 ```
 
 To remove image
 ```
-sudo docker image rm -f sanarisan/express_test:1
+docker image rm -f sanarisan/express_test:1
 ```
 
 ---
 
 First run postgres container
 ```
-sudo docker run \
+docker run \
     --rm \
 	-d \
     -p 5433:5432 \
@@ -97,7 +107,7 @@ Where:
 
 Then run express app container
 ```
-sudo docker run \
+docker run \
     --rm \
     -d \
     --net pg_express_test_nw \
@@ -117,40 +127,54 @@ Where:
 
 ### Running with docker-compose
 
-As simple as
+As simple as (!)
 ```
-sudo docker-compose up --build
-sudo docker-compose up -f ./docker-compose.yaml --build
+docker-compose up --build
+docker-compose up -f ./docker-compose.yaml --build
+```
+All the configuration in compose file
+
+
+(!)
+**BUT** Because it has cli for controlling runtime, run like this
+```
+docker-compose build
+docker-compose run express
 ```
 
-All the configuration in compose file
+**AND** To enter running container use
+```
+docker attach {container_id} 
+```
+Note that you can't exit attached container (only close terminal) or else with ctrl+c you just stop container
+
 
 ### More commands
 
 If it runs alright - one can see container with 
 ```
-sudo docker container ls
+docker container ls
 ```
 
 Also can find it by running
 ```
-sudo docker ps -a
+docker ps -a
 ```
 
 To remove it manually
 ```
-sudo docker rm express_test
+docker rm express_test
 ```
 
 To see logs
 ```
-sudo docker logs --follow express_test
-sudo docker-compose logs
+docker logs --follow express_test
+docker-compose logs
 ```
 Here you can also figure out what was the fail reason, if some happened
 
 
 To start/stop just
 ```
-sudo docker start/stop express_test
+docker start/stop express_test
 ```
