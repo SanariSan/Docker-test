@@ -178,3 +178,14 @@ To start/stop just
 ```
 docker start/stop express_test
 ```
+---
+
+Remove all containers oneliner
+```
+docker rm  $(docker ps -q -a)
+```
+
+Remove image
+```
+docker rmi hash
+```
